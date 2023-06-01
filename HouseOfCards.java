@@ -40,6 +40,10 @@ public class HouseOfCards {
         }
         return false;
     }
+
+	public List<House> getHouses() {
+		return houses;
+	}
 }
 
 

@@ -8,27 +8,27 @@ public class HouseOfCardsMain {
             houses[i] = new House();
             game.addHouse(houses[i]);
         }
-        
+
         Deck deck = new Deck();
         game.addDeck(deck);
-        
+
         Scanner scanner = new Scanner(System.in);
-        
+
         Player player = new Player();
         game.addPlayer(player);
-        
+
         while (deck.deckSize() > 0 && !allHousesClosed(houses)) {
             deck.shuffleDeck();
             Card card = deck.dealCard();
             if (card != null) {
                 System.out.println("Dealt card: " + card);
-                
+
                 House suggestedHouse = getSuggestedHouse(houses, card);
                 if (suggestedHouse != null) {
                     int suggestedHouseIndex = getHouseIndex(houses, suggestedHouse);
                     System.out.println("Suggested house (House " + suggestedHouseIndex + "): " + suggestedHouse);
                 }
-                
+
                 System.out.println("Choose a house (1-4) to place the card: ");
                 int houseIndex = scanner.nextInt();
                 if (houseIndex >= 1 && houseIndex <= 4) {
@@ -49,24 +49,26 @@ public class HouseOfCardsMain {
                 } else {
                     System.out.println("Invalid house index. Choose a number between 1 and 4.");
                 }
+                
+                displayHouses(houses); // Display houses and their values after each turn
             } else {
                 break;
             }
         }
-        
+
         scanner.close();
-        
+
         if (player.getPoints() > 0) {
             System.out.println("Congratulations! You earned " + player.getPoints() + " points.");
         } else {
             System.out.println("Sorry, you lost. No points earned.");
         }
-        
+
         if (allHousesClosed(houses) || deck.deckSize() == 0) {
             endGame();
         }
     }
-    
+
     private static boolean allHousesClosed(House[] houses) {
         for (House house : houses) {
             if (house.isAvailable()) {
@@ -75,7 +77,7 @@ public class HouseOfCardsMain {
         }
         return true;
     }
-    
+
     private static House getSuggestedHouse(House[] houses, Card card) {
         for (House house : houses) {
             int newValue = house.getCurrentValue() + card.getCardValue();
@@ -85,7 +87,7 @@ public class HouseOfCardsMain {
         }
         return null;
     }
-    
+
     private static boolean otherAlternatives(int house, int card) {
         int newValue = house + card;
         if (newValue > House.MAX_VALUE) {
@@ -93,18 +95,27 @@ public class HouseOfCardsMain {
         }
         return false;
     }
-    
+
     private static int getHouseIndex(House[] houses, House targetHouse) {
         for (int i = 0; i < houses.length; i++) {
             if (houses[i] == targetHouse) {
                 return i + 1;
             }
         }
-        return -1; // If the target house is not found
+        return -1;
     }
-    
+
     private static void endGame() {
         System.out.println("The game has ended. There are no more available houses or cards in the deck.");
-        // Add any additional logic or messages to display at the end of the game
+    }
+
+    private static void displayHouses(House[] houses) {
+        System.out.println("Current Houses:");
+        for (int i = 0; i < houses.length; i++) {
+            System.out.println("House " + (i + 1) + ":");
+            System.out.println("Value: " + houses[i].getCurrentValue());
+//            System.out.println("Cards: " + houses[i].getCards());
+            System.out.println();
+        }
     }
 }
