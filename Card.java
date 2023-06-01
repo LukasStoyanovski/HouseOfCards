@@ -35,16 +35,16 @@ public class Card {
     }
 
     public static List<String> getValidSuits() {
-        return Arrays.asList("hearts", "diamonds", "clubs", "spades");
+        return Arrays.asList("♥", "♦", "♠", "♣");
     }
 
     public static List<String> getValidTypes() {
-        return Arrays.asList("ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king");
+        return Arrays.asList("Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King");
     }
 
     public int getCardValue() {
         switch (type) {
-            case "ace":
+            case "Ace":
                 return 11;
             case "2":
                 return 2;
@@ -69,6 +69,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return type + " of " + suit;
+        return type + " " + suit;
     }
 }

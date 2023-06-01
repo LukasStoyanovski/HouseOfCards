@@ -1,11 +1,17 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class House {
     private boolean available;
     private int currentValue;
     public final static int MAX_VALUE = 31;
+    private List<Card> cards;
 
     public House() {
         available = true;
         currentValue = 0;
+        cards = new ArrayList<>();
+        
     }
 
     public void setCurrentValue(int currentValue) {
@@ -23,6 +29,10 @@ public class House {
     public int getCurrentValue() {
         return currentValue;
     }
+    
+    public List<Card> getCards() {
+        return cards;
+    }
 
     public void placeCard(Card card) throws HouseNotAvailableException {
         if (!isAvailable()) {
@@ -31,7 +41,10 @@ public class House {
 
         int value = card.getCardValue();
         currentValue += value;
+        cards.add(card);
     }
+    
+    
 
     public void calculateHouse(Player player) {
         if (currentValue == MAX_VALUE) {
@@ -41,6 +54,7 @@ public class House {
             available = false;
         }
     }
+    
 
     @Override
     public String toString() {
